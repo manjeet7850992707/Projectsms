@@ -8,7 +8,6 @@ const Login = () => {
     <>
     
    <div className="login_form">
-  
   <form action="/">
     <h3>Log in with</h3>
     <div className="login_option">
