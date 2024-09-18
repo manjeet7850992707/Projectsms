@@ -9,7 +9,6 @@ exports.login = async (req, res) => {
        
         const loginRecord = await Login.findOne({ email: email });
 
-        // If user exists
         if (loginRecord) {
             // Compare provided password with hashed password in DB
             const matchedPassword = await bcrypt.compare(password, loginRecord.password);
