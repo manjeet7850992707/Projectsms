@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Login.css';
 import axios from 'axios';
 
+
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -38,22 +40,22 @@ const Login = () => {
 
     <>
     <div  className="container-fluid border">
-      <div style={{height:'100vh'}} className="row border">
-        <div style={{height:'100vh'}} className="col-lg-3 border flex-column d-flex justify-content-around ">
+      <div style={{height:'99vh'}} className="row border">
+        <div style={{height:'99vh'}} className="col-lg-3 border flex-column d-flex justify-content-around ">
           
         
         <div className="login_form m-auto border">
-        <h1 className='text-center'>Company</h1>
+       <h2 className='mt-4 mb-4'>Company logo</h2>
          
       <form onSubmit={handleSubmit} >
         <h3>Log in with</h3>
         
         <div className="input_box">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">User Name</label>
           <input
             type="email"
             id="email"
-            placeholder="Enter email address"
+            placeholder="Enter User Name"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -62,7 +64,7 @@ const Login = () => {
         <div className="input_box">
           <div className="password_title">
             <label htmlFor="password">Password</label>
-            <a href="/">Forgot Password?</a>
+            
           </div>
           <input
             type="password"
@@ -84,10 +86,25 @@ const Login = () => {
 
 
 
-          <img style={{width:'100%',height:'100%',position:'absolute' ,top:'0',right:'0', zIndex:'-1'}} src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg" alt="" />
-          <div style={{width:'98%', height:'98%',opacity:'0.5'}} className='border bg-dark '>
+          <img style={{width:'100%',height:'100%',position:'absolute' ,top:'0',right:'0', zIndex:'-1', opacity:'0.7'}} src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg" alt="" />
+          <div style={{width:'98%', height:'98%',  background: 'rgba(0, 0, 0, 0.5)'}} className='  d-flex justify-content-center align-items-center '>
         
-           
+          <div style={{width:'100%', height:'100%'}} className="marquee-wrapper  ">
+            
+      <div className="marque-wrap  d-flex align-items-center">
+      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
+      </div>
+      <div className="marque-wrap  d-flex align-items-center">
+      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
+      </div>
+      <div className="marque-wrap  d-flex align-items-center">
+      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
+      </div>
+      <div className="marque-wrap  d-flex align-items-center">
+      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
+      </div>
+      
+    </div>
 
           </div>
         </div>

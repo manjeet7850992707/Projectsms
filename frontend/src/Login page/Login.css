@@ -134,3 +134,38 @@ form button {
 form button:hover {
     background: #4954d0;
 }
+
+
+
+/* marque */
+.marquee-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* space between marquees */
+    overflow: hidden;
+    height: 100%;
+    justify-content: center;
+  }
+
+  .marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+    display: inline-block;
+    animation: scrollRightToLeft 10s linear infinite;
+    font-size: 1.5rem; /* adjust as needed */
+    color: white;
+  }
+
+  @keyframes scrollRightToLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+
+
+
