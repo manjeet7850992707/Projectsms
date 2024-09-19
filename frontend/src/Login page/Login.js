@@ -41,7 +41,7 @@ const Login = () => {
     <>
     <div  className="container-fluid border">
       <div style={{height:'99vh'}} className="row border">
-        <div style={{height:'99vh'}} className="col-lg-3 border flex-column d-flex justify-content-around ">
+        <div style={{height:'99vh'}} className="col-lg-4 border flex-column d-flex justify-content-around ">
           
         
         <div className="login_form m-auto border">
@@ -82,30 +82,14 @@ const Login = () => {
     </div>
 
         </div>
-        <div style={{position:'relative'}} className="col-lg-9 border d-flex justify-content-center align-items-center ">
+        <div style={{position:'relative'}} className="col-lg-8 border d-flex justify-content-center align-items-center ">
 
 
 
           <img style={{width:'100%',height:'100%',position:'absolute' ,top:'0',right:'0', zIndex:'-1', opacity:'0.7'}} src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg" alt="" />
-          <div style={{width:'98%', height:'98%',  background: 'rgba(0, 0, 0, 0.5)'}} className='  d-flex justify-content-center align-items-center '>
+          <div style={{width:'80%', height:'40%',  background: 'rgba(0, 0, 0, 0.5)'}} className='  d-flex justify-content-center align-items-center '>
         
-          <div style={{width:'100%', height:'100%'}} className="marquee-wrapper  ">
-            
-      <div className="marque-wrap  d-flex align-items-center">
-      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
-      </div>
-      <div className="marque-wrap  d-flex align-items-center">
-      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
-      </div>
-      <div className="marque-wrap  d-flex align-items-center">
-      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
-      </div>
-      <div className="marque-wrap  d-flex align-items-center">
-      <div className="marquee  p-4"><h1>First marquee text flowing from left to right</h1></div>
-      </div>
-      
-    </div>
-
+         
           </div>
         </div>
 

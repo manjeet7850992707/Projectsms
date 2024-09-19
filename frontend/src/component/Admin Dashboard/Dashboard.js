@@ -43,7 +43,7 @@ const Dashboard = () => {
                         <h3>Dashboard</h3>
                         <div>
                             <button style={buttonStyle} onClick={toggleTheme}>
-                                {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                                {isDarkMode ? 'Light ' : 'Dark'}
                             </button>
                             <img
                                 style={{ width: '40px', height: '40px', borderRadius: '50%' }}
