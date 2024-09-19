@@ -9,7 +9,7 @@ const router=require('./Routes/Route')
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-const router = require('./router/router')
+
 
 
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.use(router);
+
 // Start the Server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

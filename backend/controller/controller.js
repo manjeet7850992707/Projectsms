@@ -1,52 +1,83 @@
-const Login = require('../Reg model/Login'); // Updated to 'Login' for clarity
+const User = require('../modals/Modal'); // Ensure the correct path to your User model
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); // Make sure to import jwt
+const jwt = require('jsonwebtoken');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key'; // Use environment variable for security
+
+// Register a new user
+exports.register = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        // Check if the user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                message: 'User already exists',
+                statusCode: 400
+            });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+
+        // Create new user with hashed password
+        const newUser = new User({ email, password: hashedPassword });
+        await newUser.save();
+
+        // Generate a token
+        const token = jwt.sign({ userId: newUser._id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        return res.status(201).json({
+            message: 'User registered successfully',
+            statusCode: 201,
+            data: { email: newUser.email, userId: newUser._id }, // Exclude password from response
+            token
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Error occurred during registration',
+            statusCode: 500,
+            error: error.message
+        });
+    }
+};
+
+// Login an existing user
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-       
-        const loginRecord = await Login.findOne({ email: email });
-
-        if (loginRecord) {
-            // Compare provided password with hashed password in DB
-            const matchedPassword = await bcrypt.compare(password, loginRecord.password);
-
-            if (matchedPassword) {
-                // Generate JWT token
-                const token = jwt.sign(
-                    { userId: loginRecord._id, email: loginRecord.email },
-                    'your_secret_key', // Replace with your secret key
-                    { expiresIn: '1h' }
-                );
-
-                // Respond with success message
-                return res.status(202).json({
-                    message: "Successfully logged in",
-                    statusCode: 202,
-                    data: loginRecord,
-                    token, // Include JWT token in the response
-                    userId: loginRecord._id
-                });
-            } else {
-                // Password doesn't match
-                return res.status(401).json({
-                    message: "Password does not match",
-                    statusCode: 401
-                });
-            }
-        } else {
-            // User not found
+        // Find user by email
+        const user = await User.findOne({ email });
+        if (!user) {
             return res.status(404).json({
-                message: "User not registered",
+                message: 'User not registered',
                 statusCode: 404
             });
         }
+
+        // Check if the password is correct by comparing the hashed password
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({
+                message: 'Invalid password',
+                statusCode: 401
+            });
+        }
+
+        // Generate a JWT token
+        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+
+        return res.status(202).json({
+            message: 'Successfully logged in',
+            statusCode: 202,
+            data: { email: user.email, userId: user._id }, // Exclude password from response
+            token
+        });
     } catch (error) {
-        // Handle errors
         return res.status(500).json({
-            message: "An error occurred",
+            message: 'An error occurred during login',
             statusCode: 500,
             error: error.message
         });
