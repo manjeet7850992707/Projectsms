@@ -44,11 +44,28 @@ exports.register = async (req, res) => {
 };
 
 // Login an existing user
+// Login an existing user or super admin
 exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Find user by email
+        // Check if the user is the super admin
+        const SUPER_ADMIN_EMAIL = process.env.SUPER_ADMIN_EMAIL || 'superadmin@example.com';
+        const SUPER_ADMIN_PASSWORD = process.env.SUPER_ADMIN_PASSWORD || 'supersecretpassword';
+
+        if (email === SUPER_ADMIN_EMAIL && password === SUPER_ADMIN_PASSWORD) {
+            // Generate a JWT token for the super admin
+            const token = jwt.sign({ userId: 'superadmin', email: SUPER_ADMIN_EMAIL, role: 'superadmin' }, JWT_SECRET, { expiresIn: '1h' });
+
+            return res.status(202).json({
+                message: 'Successfully logged in as Super Admin',
+                statusCode: 202,
+                data: { email: SUPER_ADMIN_EMAIL, userId: 'superadmin' },
+                token
+            });
+        }
+
+        // Find user by email in the database
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({
@@ -66,13 +83,13 @@ exports.login = async (req, res) => {
             });
         }
 
-        // Generate a JWT token
+        // Generate a JWT token for regular users
         const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
         return res.status(202).json({
             message: 'Successfully logged in',
             statusCode: 202,
-            data: { email: user.email, userId: user._id }, // Exclude password from response
+            data: { email: user.email, userId: user._id },
             token
         });
     } catch (error) {

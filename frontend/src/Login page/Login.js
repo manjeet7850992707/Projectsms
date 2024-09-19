@@ -21,7 +21,7 @@ const Login = () => {
       });
 
       // Handle the response (e.g., save the token, redirect the user)
-      if (response.data.message === 'Login successful' || response.data.message === 'Super admin login successful') {
+      if (response.data.message === 'Login successful' || response.data.message === 'Successfully logged in as Super Admin') {
         setSuccess('Login successful!');
         navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
@@ -41,8 +41,9 @@ const Login = () => {
       <div style={{height:'100vh'}} className="row border">
         <div style={{height:'100vh'}} className="col-lg-3 border flex-column d-flex justify-content-around ">
           
-        <h1 className='text-center'>logo</h1>
+        
         <div className="login_form m-auto border">
+        <h1 className='text-center'>Company</h1>
          
       <form onSubmit={handleSubmit} >
         <h3>Log in with</h3>
@@ -79,11 +80,16 @@ const Login = () => {
     </div>
 
         </div>
-        <div className="col-lg-9 border">
+        <div style={{position:'relative'}} className="col-lg-9 border d-flex justify-content-center align-items-center ">
 
 
 
-          <img style={{width:'100%',height:'100%'}} src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg" alt="" />
+          <img style={{width:'100%',height:'100%',position:'absolute' ,top:'0',right:'0', zIndex:'-1'}} src="https://images.pexels.com/photos/280221/pexels-photo-280221.jpeg" alt="" />
+          <div style={{width:'98%', height:'98%',opacity:'0.5'}} className='border bg-dark '>
+        
+           
+
+          </div>
         </div>
 
 

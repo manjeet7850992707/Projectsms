@@ -1,5 +1,5 @@
 import './App.css';
-import Navbar from './component/Navbar/Navbar';
+import Dashboard from './component/Admin Dashboard/Dashboard';
 import Login from './Login page/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ function App() {
         <Routes>
           
           <Route path="/login" element={<Login />} />
-          <Route path='/dashboard' element={<Navbar/>}/>
+          <Route path='/dashboard' element={<Dashboard/>}/>
           
           
           
