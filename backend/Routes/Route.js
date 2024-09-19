@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router(); // Use express.Router() to create a router instance
-const controller=require('../controller/Controller')
+const controller=require('../controllers/logincotrol')
 
 // Define your routes here
 
