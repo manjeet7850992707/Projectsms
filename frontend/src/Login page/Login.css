@@ -6,15 +6,7 @@
     box-sizing: border-box;
     font-family: "Montserrat", sans-serif;
 }
-body {
-    width: 100%;
-    min-height: 100vh;
-    padding: 0 10px;
-    display: flex;
-    background: #626581;
-    justify-content: center;
-    align-items: center;
-}
+
 /* Login form styling */
 .login_form {
     width: 100%;
@@ -23,6 +15,8 @@ body {
     border-radius: 6px;
     padding: 41px 30px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    margin: auto;
+    margin-top: 50px;
 }
 .login_form h3 {
     font-size: 20px;
