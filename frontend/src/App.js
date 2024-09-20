@@ -1,4 +1,6 @@
 import './App.css';
+import Addemployee from './component/Admin Dashboard/Addemployee';
+import Admincontent from './component/Admin Dashboard/Admincontent';
 import Dashboard from './component/Admin Dashboard/Dashboard';
 import Login from './Login page/Login';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -15,7 +17,6 @@ function App() {
           
           <Route path="/" element={<Login />} />
           <Route path='/dashboard' element={<Dashboard/>}/>
-          
           
           
     
