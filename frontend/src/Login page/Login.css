@@ -10,17 +10,17 @@
 .login_form {
     width: 100%;
     max-width: 535px;
-    background: #fff;
-    border-radius: 6px;
-    padding: 41px 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    margin: auto;
-    margin-top: 50px;
-    padding: 30px;
+    
+   
+    padding: 40px;
+    
+    
+ 
+    
 }
 .login_form h3 {
     font-size: 20px;
-    text-align: center;
+    
 }
 /* Google & Apple button styling */
 .login_form .login_option {
@@ -120,7 +120,7 @@ a:hover {
 form button {
     width: 100%;
     height: 56px;
-    border-radius: 5px;
+   
     border: none;
     outline: none;
     background: #626CD6;
@@ -165,6 +165,42 @@ form button:hover {
     100% {
       transform: translateX(100%);
     }
+  }
+  .Inner-img-div {
+    width: 80%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling for the inner container */
+    
+    position: absolute; /* Make sure it's positioned relative to the outer container */
+}
+
+/* Customize the inner container's scrollbar */
+.Inner-img-div::-webkit-scrollbar {
+    width: 6px;
+    /* Light background color for the track */
+}
+
+.Inner-img-div::-webkit-scrollbar-thumb {
+    background-color: #046E1F; /* Scrollbar color */
+    border-radius: 5px; /* Optional: round edges */
+    margin-left: 10px;
+}
+
+.Inner-img-div::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Darker color on hover */
+}
+
+  .Live-data-div{
+
+border-bottom: 1px solid white;
+padding-top: 20px;
+    
+  }
+  .Live-data-div h3,p{
+    color: white;
   }
 
 
