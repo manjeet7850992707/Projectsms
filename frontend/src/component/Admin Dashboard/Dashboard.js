@@ -45,7 +45,7 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="container">
-                <Link to="/addemployee" className="box employee">
+                <Link to="/addemployee"  className="box employee">
                     <h3>Add Employee</h3>
                 </Link>
                 <Link to="/addadmin" className="box admin">

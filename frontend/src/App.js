@@ -1,4 +1,5 @@
 import './App.css';
+import Ademform from './component/Admin Dashboard/Ademform';
 
 import Dashboard from './component/Admin Dashboard/Dashboard';
 import Login from './Login page/Login';
@@ -17,7 +18,7 @@ function App() {
           <Route path="/" element={<Login />} />
           
           <Route path='/dashboard' element={<Dashboard/>}/>
-          
+          <Route path='/addemployee' element={<Ademform/>}/>
           
     
         </Routes>
