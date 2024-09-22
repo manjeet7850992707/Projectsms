@@ -1,52 +1,57 @@
+const crypto = require('crypto'); // Import the crypto module
 const User = require('../modals/Modal'); // Ensure the correct path to your User model
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key'; // Use environment variable for security
 
 // Register a new user
 exports.register = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, mobileNumber, role } = req.body;
 
     try {
+        // Validate role
+        if (!['admin', 'employee'].includes(role)) {
+            return res.status(400).json({ message: 'Invalid role', statusCode: 400 });
+        }
+
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({
-                message: 'User already exists',
-                statusCode: 400
-            });
+            return res.status(400).json({ message: 'User already exists', statusCode: 400 });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
+        // Generate user ID
+        const userCount = await User.countDocuments({ role });
+        const employeeId = `Kotibox${role.charAt(0).toUpperCase()}${userCount + 1}`; // Generate employee ID
 
-        // Create new user with hashed password
-        const newUser = new User({ email, password: hashedPassword });
+        // Generate a random password (for demonstration purposes)
+        const randomPassword = `Kotibox${crypto.randomBytes(4).toString('hex')}`; // Random password with prefix
+
+        // Create new user without hashing the password
+        const newUser = new User({ email, password: randomPassword, mobileNumber, role, employeeId });
         await newUser.save();
-
-        // Generate a token
-        const token = jwt.sign({ userId: newUser._id, email: newUser.email }, JWT_SECRET, { expiresIn: '1h' });
 
         return res.status(201).json({
             message: 'User registered successfully',
             statusCode: 201,
-            data: { email: newUser.email, userId: newUser._id }, // Exclude password from response
-            token
+            data: {
+                email: newUser.email,
+                userId: newUser._id,
+                mobileNumber: newUser.mobileNumber,
+                role: newUser.role,
+                employeeId: newUser.employeeId,
+                password: randomPassword // Returning password in response (not recommended)
+            }
         });
     } catch (error) {
-        return res.status(500).json({
-            message: 'Error occurred during registration',
-            statusCode: 500,
-            error: error.message
-        });
+        return res.status(500).json({ message: 'Error occurred during registration', statusCode: 500, error: error.message });
     }
 };
 
-// Login an existing user
-// Login an existing user or super admin
+
+
 exports.login = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body; // Use email directly for login
 
     try {
         // Check if the user is the super admin
@@ -84,12 +89,12 @@ exports.login = async (req, res) => {
         }
 
         // Generate a JWT token for regular users
-        const token = jwt.sign({ userId: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, JWT_SECRET, { expiresIn: '1h' });
 
         return res.status(202).json({
             message: 'Successfully logged in',
             statusCode: 202,
-            data: { email: user.email, userId: user._id },
+            data: { email: user.email, userId: user._id, role: user.role },
             token
         });
     } catch (error) {

@@ -14,14 +14,27 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  mobileNumber: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ['admin', 'employee'], // Ensure role can only be 'admin' or 'employee'
+    required: true,
+  },
+  employeeId: {
+    type: String,
+    unique: true, // Ensure each user has a unique employee ID
   }
 }, {
-  timestamps: true
+  timestamps: true,
 });
 
 // Instance method to generate a JWT for a user
 userSchema.methods.generateAuthToken = function() {
-  const token = jwt.sign({ userId: this._id, email: this.email }, JWT_SECRET, {
+  const token = jwt.sign({ userId: this._id, email: this.email, role: this.role }, JWT_SECRET, {
     expiresIn: '1h',
   });
   return token;
