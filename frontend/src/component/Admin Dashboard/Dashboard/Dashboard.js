@@ -8,6 +8,7 @@ import { RiMenuFold3Line } from "react-icons/ri";
 import { RiMenuFold4Line } from "react-icons/ri";
 import { Route, Routes } from 'react-router-dom';
 import Sidesection from './Sidesection';
+import AddFunction from './AddFunction';
 
 const Dashboard = () => {
     const [sidebarWidth, setSidebarWidth] = useState('20%');
@@ -36,9 +37,10 @@ const Dashboard = () => {
                         ) : (
                             <RiMenuFold3Line onClick={handleMenuClick} size={24} />
                         )}
-                        <form style={{ width: '200px' }} className="d-flex" role="search">
-                            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                        </form>
+                        <div className='addfunction d-flex gap-2'>
+                            <AddFunction />
+                        </div>
+
                     </div>
 
                     <ul style={{ display: 'flex', gap: '30px', padding: '15px', listStyle: 'none' }} className='icons-list'>

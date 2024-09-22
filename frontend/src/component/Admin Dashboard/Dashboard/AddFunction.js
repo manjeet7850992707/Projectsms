@@ -38,7 +38,7 @@ const AddFunction = () => {
     e.preventDefault(); // Prevent default form submission
 
     try {
-      const response = await axios.post('/api/register', {
+      const response = await axios.post('http://localhost:5000/register', {
         email,
         mobileNumber,
         role,
@@ -72,7 +72,7 @@ const AddFunction = () => {
           <form onSubmit={handleSubmit}>
             <input
               type="text"
-              placeholder="Member Name"
+              placeholder="Member Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="form-control"
