@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import './Login.css';
 import axios from 'axios';
+import { Logincontext } from '../component/context/Logincontext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +10,7 @@ const Login = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate
+  const { setSuperadminlogin } = useContext(Logincontext); // Use context to update Superadminlogin state
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -21,11 +23,11 @@ const Login = () => {
       });
 
       // Handle the response (e.g., save the token, redirect the user)
-      if (
-        response.data.message === 'Login successful' ||
-        response.data.message === 'Successfully logged in as Super Admin'
-      ) {
+      if (response.data.message === 'Login successful' || response.data.message === 'Successfully logged in as Super Admin') {
         setSuccess('Login successful!');
+        setSuperadminlogin(true); // Update context for Superadminlogin
+        localStorage.setItem('Superadminlogin', true); // Store login status in localStorage
+
         navigate('/dashboard'); // Redirect to dashboard on successful login
       } else {
         setError('Login failed. Please check your credentials and try again.');
@@ -42,11 +44,11 @@ const Login = () => {
       <div className="container-fluid border">
         <div className="row border" style={{ height: '99vh' }}>
           {/* Left Side: Login Form */}
-          <div className="col-lg-4  d-flex flex-column justify-content-center">
+          <div className="col-lg-4 d-flex flex-column justify-content-center">
             <div className="login_form">
               <form onSubmit={handleSubmit}>
                 <h2 className="mt-4 mb-4">Company Logo</h2>
-                <span className="fs-4 ">Admin Login</span>
+                <span className="fs-4">Admin Login</span>
                 <div className="input_box border mt-4">
                   <label htmlFor="email">User Name</label>
                   <input
@@ -80,7 +82,7 @@ const Login = () => {
 
           {/* Right Side: Background Image & Info */}
           <div
-            className="col-lg-8 border d-flex justify-content-center align-items-center position-relative  border"
+            className="col-lg-8 border d-flex justify-content-center align-items-center position-relative"
             style={{ height: '100%' }}
           >
             {/* Background image */}
@@ -92,7 +94,6 @@ const Login = () => {
                 top: '0',
                 right: '0',
                 zIndex: '-1',
-                
                 objectFit: 'cover',
               }}
               src="https://images.pexels.com/photos/460695/pexels-photo-460695.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"

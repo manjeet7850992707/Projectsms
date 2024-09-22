@@ -1,29 +1,22 @@
 import './App.css';
 import Dashboard from './component/Admin Dashboard/Dashboard/Dashboard';
+import { Logincontext } from './component/context/Logincontext';
 import Login from './Login page/Login';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-// import Home from './Home'; // Example: Add Home component
+import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 
 function App() {
+  const [Superadminlogin, setSuperadminlogin] = useState(localStorage.getItem('Superadminlogin'));
+
   return (
-    <>
-      <BrowserRouter>
-    
+    <Logincontext.Provider value={{Superadminlogin ,setSuperadminlogin}}>
+      {Superadminlogin && <Dashboard/>}
+      <Routes>
+        <Route path="/" element={<Login />} />
         
-        <Routes>
-          
-          <Route path="/" element={<Login />} />
-          
-          <Route path='/dashboard' element={<Dashboard/>}/>
-          
+      </Routes>
+      </Logincontext.Provider>
     
-        </Routes>
-      </BrowserRouter>
-
-
-      
-    </>
   );
 }
 
