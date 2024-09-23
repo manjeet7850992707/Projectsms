@@ -1,30 +1,24 @@
 .dashboard {
     width: 100%;
     height: 100vh;
-
     position: relative;
     display: flex;
 }
 
 .right-section {
-
     width: 80%;
     display: flex;
     flex-direction: column;
     position: relative;
-
-
-
 }
-
 
 .Sidesection {
     width: 20%;
     height: 100vh;
-    background-color: #0C213A;
+    background-color: white;
+    color: black;
     display: flex;
     flex-direction: column;
-
 }
 
 .top-navbar {
@@ -34,8 +28,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-
 }
 
 .left-section {
@@ -45,15 +37,80 @@
     flex-direction: column;
     align-items: center;
     background-color: #F2EDF3;
-
-
-
 }
 
-
-.Sidesection li a {
+.Sidesection a {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 300;
+}
 
+/* Menu Item Styles */
+.menu-item {
+    position: relative; /* For absolute positioning of submenu-text */
+    padding: 10px; /* Add some padding for better click area */
+}
+
+.menu-link {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent */
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.menu-link:hover {
+    color: #007bff; /* Change to your desired hover color */
+}
+
+/* Styles for menu text */
+.menu-text {
+    margin-left: 10px; /* Space between icon and text */
+    display: none; /* Hidden by default */
+}
+
+/* Show menu text on sidebar hover */
+.Sidesection:hover .menu-text {
+    display: block; /* Show text when hovering over the sidebar */
+}
+
+/* Show submenu text on hover */
+.submenu-text {
+    position: absolute;
+    left: 40px; /* Adjust as necessary */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    white-space: nowrap; /* Prevent text wrapping */
+    display: none; /* Hidden by default */
+}
+
+.menu-item:hover .submenu-text {
+    display: block; /* Show on hover */
+}
+
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f0f0f0; /* Change background on hover */
+}
+
+.dropdown-link {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent */
+    margin-left: 5px; /* Space between icon and text */
+}
+.menu-item:hover{
+    background-color: rgba(0, 0, 0, 0.486);
 }
