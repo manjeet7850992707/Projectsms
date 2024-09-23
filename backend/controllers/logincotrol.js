@@ -17,7 +17,7 @@ exports.getmembersdata = async (req, res) => {
 
 // Register a new user
 exports.register = async (req, res) => {
-    const { email, mobileNumber, role } = req.body;
+    const { email, mobileNumber, role, assignedAdmin } = req.body; // Include assignedAdmin in the request
 
     try {
         // Validate role
@@ -31,18 +31,37 @@ exports.register = async (req, res) => {
             return res.status(400).json({ message: 'User already exists', statusCode: 400 });
         }
 
+        // If the role is 'employee', check if assignedAdmin is provided and valid
+        if (role === 'employee') {
+            if (!assignedAdmin) {
+                return res.status(400).json({ message: 'An admin must be assigned to an employee', statusCode: 400 });
+            }
+
+            // Check if the assigned admin exists and has a role of 'admin'
+            const admin = await User.findOne({ _id: assignedAdmin, role: 'admin' });
+            if (!admin) {
+                return res.status(404).json({ message: 'Assigned Admin not found', statusCode: 404 });
+            }
+        }
+
         // Generate user ID
         const userCount = await User.countDocuments({ role });
         const employeeId = `Kotibox${role.charAt(0).toUpperCase()}${userCount + 1}`; // Generate employee ID
 
-        // Generate a random password (for demonstration purposes)
+        // Generate a random password
         const randomPassword = `Kotibox${crypto.randomBytes(4).toString('hex')}`; // Random password with prefix
-
-        // Hash the password before saving
         const hashedPassword = await bcrypt.hash(randomPassword, 10);
 
-        // Create new user
-        const newUser = new User({ email, password: hashedPassword, mobileNumber, role, employeeId });
+        // Create the new user (include assignedAdmin if role is employee)
+        const newUser = new User({
+            email,
+            password: hashedPassword,
+            mobileNumber,
+            role,
+            employeeId,
+            ...(role === 'employee' && { assignedAdmin }) // Assign the admin to the employee
+        });
+
         await newUser.save();
 
         return res.status(201).json({
@@ -54,13 +73,15 @@ exports.register = async (req, res) => {
                 mobileNumber: newUser.mobileNumber,
                 role: newUser.role,
                 employeeId: newUser.employeeId,
-                password: randomPassword // Returning plain password (consider emailing it instead for security)
+                assignedAdmin: role === 'employee' ? newUser.assignedAdmin : null,
+                password: randomPassword // Return the plain password
             }
         });
     } catch (error) {
         return res.status(500).json({ message: 'Error occurred during registration', statusCode: 500, error: error.message });
     }
 };
+
 
 // Login function
 exports.login = async (req, res) => {
@@ -117,5 +138,13 @@ exports.login = async (req, res) => {
             statusCode: 500,
             error: error.message
         });
+    }
+};
+exports.getAllAdmins = async (req, res) => {
+    try {
+        const admins = await User.find({ role: 'admin' }); // Retrieve all admins
+        res.status(200).json(admins); // Send the admins data as JSON
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving admins', error });
     }
 };

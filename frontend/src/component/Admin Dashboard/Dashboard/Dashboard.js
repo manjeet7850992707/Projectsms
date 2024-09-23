@@ -74,8 +74,8 @@ const Dashboard = () => {
                 </div>
 
                 {/* Main Content Area */}
-                <div className="left-section" style={{ width: '100%', height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <div className='mt-4' style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
+                <div className="left-section p-3" style={{ width: '100%', height: '95vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <div className='mt-4 p-3' style={{ display: 'flex', justifyContent: 'space-around', width: '100%' }}>
                         {/* Box for Total Tasks */}
                         <Paper elevation={3} style={{ width: '30%', height: '150px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#e0f7fa' }}>
                             <h2>Total Tasks</h2>

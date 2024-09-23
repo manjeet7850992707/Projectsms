@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Dashboard.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import axios from 'axios'; // Make sure to install axios
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const modalStyle = {
     position: 'absolute',
@@ -23,33 +23,48 @@ const AddFunction = () => {
     const [open, setOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [mobileNumber, setMobileNumber] = useState('');
-    const [role, setRole] = useState('employee'); // Default role
+    const [role, setRole] = useState('employee');
+    const [admins, setAdmins] = useState([]); // State to store the list of admins
+    const [assignedAdmin, setAssignedAdmin] = useState(''); // Store selected admin
 
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate();
+
+    // Fetch all admins when the modal opens
+    useEffect(() => {
+        if (role === 'employee') {
+            axios.get('http://localhost:5000/getAllAdmins')
+                .then(response => {
+                    setAdmins(response.data); // Set the admin list
+                })
+                .catch(error => {
+                    alert('Failed to load admins');
+                });
+        }
+    }, [role]); // Fetch admins when the role is employee
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
         setOpen(false);
-        // Reset form fields
         setEmail('');
         setMobileNumber('');
         setRole('employee');
+        setAssignedAdmin('');
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
 
         try {
             const response = await axios.post('http://localhost:5000/register', {
                 email,
                 mobileNumber,
                 role,
+                assignedAdmin: role === 'employee' ? assignedAdmin : undefined,
             });
-            alert(response.data.message); // Show success message
-            handleClose(); // Close modal after successful registration
-            // Navigate to /Addmember after success
+            alert(response.data.message);
+            handleClose();
 
-            if (response.data.message === "User registered successfully") {
+            if (response.data.message === 'User registered successfully') {
                 navigate('/Addmember');
             }
         } catch (error) {
@@ -62,7 +77,6 @@ const AddFunction = () => {
             <Button onClick={handleOpen}>+ Add Member</Button>
             <Button>+ Add Task</Button>
 
-            {/* Modal for adding a member */}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -102,6 +116,24 @@ const AddFunction = () => {
                             <option value="employee">Employee</option>
                             <option value="admin">Admin</option>
                         </select>
+
+                        {/* Show admin dropdown only if the role is 'employee' */}
+                        {role === 'employee' && (
+                            <select
+                                value={assignedAdmin}
+                                onChange={(e) => setAssignedAdmin(e.target.value)}
+                                className="form-control mt-2"
+                                required
+                            >
+                                <option value="">Select Admin</option>
+                                {admins.map(admin => (
+                                    <option key={admin._id} value={admin._id}>
+                                        {admin.email} {/* Display admin's email */}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+
                         <Button type="submit" variant="contained" color="primary" className="mt-3">
                             Submit
                         </Button>

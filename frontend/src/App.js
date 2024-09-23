@@ -12,7 +12,7 @@ function App() {
     <Logincontext.Provider value={{Superadminlogin ,setSuperadminlogin}}>
       {Superadminlogin && <Dashboard/>}
       <Routes>
-        <Route path="/asd" element={<Login />} />
+        <Route path="/" element={<Login />} />
         
       </Routes>
       </Logincontext.Provider>

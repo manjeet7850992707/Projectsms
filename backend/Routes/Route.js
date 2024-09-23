@@ -7,7 +7,7 @@ const controller=require('../controllers/logincotrol')
 
 router.post('/register',controller.register)
 router.post('/login',controller.login)
-
+router.get('/getAllAdmins',controller.getAllAdmins)
 router.get('/getmembersdata',controller.getmembersdata)
 
 
