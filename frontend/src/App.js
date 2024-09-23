@@ -9,14 +9,17 @@ function App() {
   const [Superadminlogin, setSuperadminlogin] = useState(localStorage.getItem('Superadminlogin'));
 
   return (
-    <Logincontext.Provider value={{Superadminlogin ,setSuperadminlogin}}>
-      {Superadminlogin && <Dashboard/>}
-      <Routes>
-        <Route path="/" element={<Login />} />
+    <Logincontext.Provider value={{Superadminlogin, setSuperadminlogin}}>
+      {Superadminlogin ? (
+        <Dashboard />
+      ) : (
         
+      
+      <Routes>
+        <Route path='/' element={<Login/>}/>
       </Routes>
-      </Logincontext.Provider>
-    
+      )}
+    </Logincontext.Provider>
   );
 }
 
