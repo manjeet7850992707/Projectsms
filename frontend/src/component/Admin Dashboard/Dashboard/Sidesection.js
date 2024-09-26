@@ -28,7 +28,7 @@ const Sidesection = ({ sidebarWidth }) => {
             style={{ width: sidebarWidth, transition: 'width 0.5s ease-in-out', padding: '10px' }}
             onMouseLeave={handleMouseLeave}
         >
-            <h3 className='text-dark mt-3' style={{ opacity: sidebarWidth === '3%' ? '0' : '1' }}>HRMS</h3>
+            <h3 className='text-dark mt-3' style={{ opacity: sidebarWidth === '3%' ? '0' : '1' }}>Kotibox</h3>
             <section className='mt-4'>
                 <div className='d-flex flex-column gap-2'>
                     <div className='menu-item d-flex justify-content-between align-items-center '>
